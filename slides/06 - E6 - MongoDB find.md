@@ -3,32 +3,63 @@
 ## Restaurants
 1. Visualizzare tutti i ristoranti. 
 
+```mongodb
+db.restaurants.find();
+```
 
 2. Visualizzare quartiere (borough) e tipo di cucina (cuisine) di tutti i ristoranti. 
 
+```mongodb
+db.restaurants.find({}, { borough: 1, cuisine: 1 });
+```
 
 3. Visualizzare quartiere (borough) e tipo di cucina (cuisine) di tutti i ristoranti, ma senza _id. 
 
+```mongodb
+db.restaurants.find({}, { borough: 1, cuisine: 1, _id : 0 });
+```
 
 4. Visualizzare quartiere (borough), tipo di cucina (cuisine) e via (address.street) di tutti i ristoranti. 
 
+```mongodb
+db.restaurants.find({}, { borough: 1, cuisine: 1, "address.street": 1 ,_id : 0 });
+```
+
 5. Visualizzare iI ristorante il cui zipcode è 11225
 
+```mongodb
+db.restaurants.find({ "address.zipcode": "11225" });
+```
 
 6. Visualizzare i ristoranti il cui tipo di cucina è Hamburgers 
 
+```mongodb
+db.restaurants.find({ "cuisine": "Hamburgers" });
+```
 
 7. Visualizzare i ristoranti il cui tipo di cucina NON è Hamburgers 
 
+```mongodb
+db.restaurants.find({ "cuisine" : { "$nin" : ["Hamburgers"] }});
+```
 
 8. Visualizzare i ristoranti il cui tipo di cucina è tra Hamburgers, Bakery o Irish 
 
+```mongodb
+db.restaurants.find({ "cuisine" : { "$in" : ["Hamburgers", "Bakery", "Irish" ] }});
+```
 
 9. Visualizzare i ristoranti il cui tipo di cucina NON è tra Hamburgers, Bakery o Irish 
 
+```mongodb
+db.restaurants.find({ "cuisine" : { "$nin" : ["Hamburgers", "Bakery", "Irish" ] }});
+```
 
 10. Visualizzare i ristoranti il cui tipo di cucina non esiste 
 
+```mongodb
+db.restaurants.find({ "cuisine" : { "$exists" : false }});
+```
 
 ## Yelp business
 11. Visualizzare tutti i business che hanno ricevuto almeno 10 recensioni (review_count) E si trovano in Arizona o in Nevada (state = NV o AZ) 
