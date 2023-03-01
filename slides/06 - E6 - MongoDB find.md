@@ -64,31 +64,81 @@ db.restaurants.find({ "cuisine" : { "$exists" : false }});
 ## Yelp business
 11. Visualizzare tutti i business che hanno ricevuto almeno 10 recensioni (review_count) E si trovano in Arizona o in Nevada (state = NV o AZ) 
 
+```mongodb
+db.getCollection("yelp-business").find({ review_count: { $gte: 10 }, $or: [{ state: "NV" }, { state: "AZ" }] })
+```
 
 12. Visualizzare tutti i business che hanno ricevuto almeno 10 recensioni (review_count) O si trovano in Arizona o in Nevada (state = NV o AZ) 
 
+```mongodb
+db.getCollection("yelp-business").find( { $or: [{ review_count: { $gte: 10 }}, { $or: [{ state: "NV" }, { state: "AZ" }]}] })
+```
 
 13. Visualizzare tutti i business che hanno Grocery tra le categorie 
 
+```mongodb
+db.getCollection("yelp-business").find( { categories: "Grocery" })
+```
+
 14. Visualizzare tutti i business che hanno Grocery E Food tra le categorie 
+
+```mongodb
+db.getCollection("yelp-business").find( { categories: { $all : ["Grocery", "Food"] }})
+```
 
 15. Visualizzare tutti i business che hanno Grocery O Food tra le categorie 
 
+```mongodb
+db.getCollection("yelp-business").find( { categories: { $in : ["Grocery", "Food"] }})
+```
+
 16. Visualizzare tutti i business che hanno SOLAMENTE Grocery E Food tra le categorie 
+
+```mongodb
+db.getCollection("yelp-business").find( { categories: ["Grocery", "Food"] })
+```
 
 17. Visualizzare tutti i business che hanno 5 categorie 
 
+```mongodb
+db.getCollection("yelp-business").find({ categories: { $size: 3 }})
+```
+
 18. Visualizzare tutti i business che hanno 5 categorie e la quinta categoria è Food 
+
+```mongodb
+db.getCollection("yelp-business").find({ categories: { $size: 5 }, "categories.4": "Food" })
+```
 
 19. Visualizzare le prime due categorie di ogni business 
 
+```mongodb
+db.getCollection("yelp-business").find({}, { categories: { $slice: 2 }})
+```
+
 20. Visualizzare unicamente le categorie dei business del Nevada 
+
+```mongodb
+db.getCollection("yelp-business").find({ state: "NV" }, { categories: 1 })
+```
 
 21. Visualizzare i valori distinti del campo city
 
+```mongodb
+db.getCollection("yelp-business").distinct("city")
+```
+
 22. Visualizzare i valori distinti del campo city nello stato del Nevada
 
+```mongodb
+db.getCollection("yelp-business").distinct("city", { state: "NV" })
+```
+
 23. Visualizzare i valori distinti dell’array categories
+
+```mongodb
+db.getCollection("yelp-business").distinct("categories")
+```
 
 ## Games
 
